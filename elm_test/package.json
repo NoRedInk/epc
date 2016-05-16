@@ -1,0 +1,15 @@
+{
+  "name": "elm_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "elm-make": "elm-make",
+    "elm-install": "elm-package install -y"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "elm": "^0.16.0"
+  }
+}

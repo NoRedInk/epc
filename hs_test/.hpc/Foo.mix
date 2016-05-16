@@ -1,0 +1,1 @@
+Mix "./Foo.hs" 2016-05-14 00:39:07 UTC 3237939704 8 [(3:7-3:9,ExpBox False),(3:1-3:9,TopLevelBox ["foo"])]

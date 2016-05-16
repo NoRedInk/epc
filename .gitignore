@@ -1,0 +1,5 @@
+.stack-work
+.epc
+node_modules
+elm-stuff
+elm_test/**/*.html
