@@ -1,6 +1,3 @@
-[submodule "lib/elm-compiler"]
-	path = lib/elm-compiler
-	url = git@github.com:elm-lang/elm-compiler.git
 [submodule "lib/elm-format"]
 	path = lib/elm-format
-	url = git@github.com:avh4/elm-format.git
+	url = git@github.com:joneshf/elm-format.git
