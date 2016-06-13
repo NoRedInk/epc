@@ -1,4 +1,4 @@
-module Foo where
+module Aaron.Hardy.Pairing.Foo where
 
 {-|
 @docs foo, bar
