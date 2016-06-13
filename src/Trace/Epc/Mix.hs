@@ -24,8 +24,8 @@ regionToHpcPos Region
     , end = Position {line = l2, column = c2}
     } = toHpcPos (l1, c1, l2, c2)
 
-moduleName :: Module -> String
-moduleName Module {header = Header {name = Commented _ strs _}} = intercalate "." strs
+moduleName :: Module -> [String]
+moduleName Module {header = Header {name = Commented _ strs _}} = strs
 
 countTopLevel :: Module -> Int
 countTopLevel = length . topLevels
