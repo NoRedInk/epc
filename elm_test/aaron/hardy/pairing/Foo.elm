@@ -1,20 +1,19 @@
-module Aaron.Hardy.Pairing.Foo where
+module Aaron.Hardy.Pairing.Foo (..) where
 
 {-|
 @docs foo, bar
 -}
 
-{-|
--}
-foo : Int
-foo =
-  3
+import Aaron.Hardy.James.Pairing.Bar exposing (foo)
+
 
 {-|
 -}
 bar : Int
-bar = 12
+bar =
+    12
+
 
 baz : Int
 baz =
-  foo + bar
+    foo + bar

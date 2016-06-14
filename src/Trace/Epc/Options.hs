@@ -7,12 +7,12 @@ import Options.Applicative
     , progDesc, strArgument, strOption, value
     )
 
-data Options = Options { epcdir :: String, file :: String }
+data Options = Options { epcdir :: String, dir :: String }
 
 options :: Parser Options
 options =
     Options <$> strOption (long "epcdir" <> metavar "DIR" <> value ".epc" <> help "Directory containing instrumented files")
-            <*> strArgument (metavar "FILE")
+            <*> strArgument (metavar "DIR")
 
 opts :: ParserInfo Options
 opts =

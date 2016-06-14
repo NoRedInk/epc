@@ -1,14 +1,18 @@
+{-# LANGUAGE TupleSections #-}
 module Trace.Epc.Instrument where
 
 import AST.Declaration (Decl(Decl), Declaration(Definition))
 import AST.Module
     ( ImportMethod(ImportMethod), Module(Module), UserImport(UserImport)
-    , body, header, imports, name
+    , Header(Header)
+    , body, header, imports, name, exports
     )
+import AST.Module.Name (Raw)
 import AST.V0_16
     ( Commented(Commented), IntRepresentation(DecimalInt), Literal(IntNum)
+    , KeywordCommented(KeywordCommented)
     )
-import AST.Variable (Listing(ClosedListing), Ref(VarRef))
+import AST.Variable (Listing(..), Ref(VarRef, OpRef), Value(Value, Union))
 import Control.Monad.Reader (Reader, ask)
 import Data.List (findIndex)
 import Data.Maybe (fromMaybe)
@@ -17,8 +21,29 @@ import Trace.Hpc.Mix (BoxLabel(TopLevelBox), MixEntry)
 
 import qualified AST.Expression as E
 import qualified Reporting.Annotation as A
+import qualified Data.Map as M
 
 type Env = (String, [MixEntry])
+
+allSeeingEye :: [Module] -> M.Map String Raw
+allSeeingEye ms = M.fromList (extractMapping =<< fmap header ms)
+
+extractMapping :: Header -> [(String, Raw)]
+extractMapping Header {name = Commented _ names _, exports = KeywordCommented _ _ exps} =
+    valueToTuple names <$> exportedNames exps
+
+exportedNames :: Listing Value -> [Commented Value]
+exportedNames (ExplicitListing funs _) =
+    funs
+exportedNames (OpenListing _) =
+    []
+exportedNames ClosedListing =
+    []
+
+valueToTuple :: Raw -> Commented Value -> (String, Raw)
+valueToTuple raw (Commented _ (Value (VarRef str)) _) = (str, raw)
+valueToTuple raw (Commented _ (Value (OpRef str)) _) = (str, raw)
+valueToTuple raw (Commented _ (Union (str, _) _) _) = (str, raw)
 
 instrumentModule :: Module -> Reader Env Module
 instrumentModule m@Module {body = decls, imports = imps, header = headr} = do
